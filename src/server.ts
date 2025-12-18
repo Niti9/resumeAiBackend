@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import { connectDB } from "./config/db.js";
 import dotenv from 'dotenv';
+import { extractPdfText } from "./utils/extractPdf.js";
 
 const app = express();
 dotenv.config();
@@ -12,7 +13,11 @@ app.use(express.json());
 connectDB();
 
 app.get("/", (_, res) => {
+
+  extractPdfText();
   res.send("ResumeMatch AI API running");
+
+
 });
 
 const PORT = 2000;
