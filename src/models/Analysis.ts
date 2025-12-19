@@ -6,7 +6,7 @@ const analysisSchema = new Schema(
     jobDescription: String,
     matchScore: Number,
     missingKeywords: [String],
-    suggestions: String
+    suggestions: [String]
   },
   { timestamps: true }
 );
