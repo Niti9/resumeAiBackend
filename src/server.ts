@@ -10,15 +10,18 @@ dotenv.config();
 
 const allowedOrigins = [
   "https://resume-ai-teal-ten.vercel.app", 
+  "https://resume-ai-teal-ten.vercel.app/",
   "http://localhost:5173",
   "http://localhost:3000",
 ];
 app.use(cors({
   origin: function(origin, callback) {
+    console.log("Incoming request from origin:", origin);
     // Allow requests with no origin (like Postman) or allowed origins
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
+      console.error("CORS Blocked for:", origin);
       callback(new Error("Not allowed by CORS"));
     }
   },
