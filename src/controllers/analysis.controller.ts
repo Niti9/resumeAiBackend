@@ -28,8 +28,8 @@ export const analyzeResume = async (req: AuthenticatedRequest, res: Response) =>
     try {
 
       const cleaned = aiRawResponse
-        .replace(/^```json\s*/i, "")
-        .replace(/```$/i, "")
+        .replace(/```json/gi, "")
+        .replace(/```/g, "")
         .trim();
 
       aiResponse = JSON.parse(cleaned);
@@ -48,9 +48,20 @@ export const analyzeResume = async (req: AuthenticatedRequest, res: Response) =>
       jobDescription
     });
 
-    res.json(saved);
+    res.status(200).json({
+      success: true,
+      data: {
+        matchScore: aiResponse.matchScore,
+        missingKeywords: aiResponse.missingKeywords,
+        suggestions: aiResponse.suggestions,
+        jobDescription
+      }
+    });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Resume analysis failed" });
+    res.status(500).json({
+      success: false,
+      message: "Resume analysis failed"
+    });
   }
 };

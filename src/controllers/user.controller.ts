@@ -6,7 +6,7 @@ import { Request, Response } from 'express';
 
 export const register = async (req: Request, res: Response) => {
     try {
-        const { email, password } = req.body;
+        const { email, password, username } = req.body;
 
         const existingUser = await User.findOne({ email });
         if (existingUser) {
@@ -17,9 +17,10 @@ export const register = async (req: Request, res: Response) => {
 
         const newUser = await User.create({
             email,
-            password: hashedPassword
+            password: hashedPassword,
+            username
         });
-        
+
         const token = jwt.sign(
             { email: newUser.email, id: newUser._id },
             process.env.JWT_SECRET!,
@@ -28,7 +29,10 @@ export const register = async (req: Request, res: Response) => {
 
         res.status(201).json({
             message: "User created successfully",
-            result: newUser,
+            user: {
+                username: newUser.username,
+                email: newUser.email
+            },
             token
         });
     } catch (error) {
@@ -56,7 +60,14 @@ export const login = async (req: Request, res: Response) => {
             { expiresIn: "1h" }
         );
 
-        res.status(200).json({ result: user, token });
+        res.status(200).json({
+            message: "User Login successfully",
+            user: {
+                username: user.username,
+                email: user.email
+            },
+            token
+        });
     } catch (error) {
         res.status(500).json({ message: "Something went wrong", error: error });
     }
