@@ -10,6 +10,6 @@ export const generateWithOllama = async (prompt: string) => {
       num_ctx: 4096
     }
   });
-
+  console.log("Ollama responded~~~~~~~~``",response.data);
   return response.data.response;
 };
