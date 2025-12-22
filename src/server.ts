@@ -10,7 +10,6 @@ dotenv.config();
 
 const allowedOrigins = [
   "https://resume-ai-teal-ten.vercel.app", 
-  // "https://resume-ai-teal-ten.vercel.app/",
   "http://localhost:5173",
   "http://localhost:3000",
 ];
