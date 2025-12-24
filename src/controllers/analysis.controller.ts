@@ -21,10 +21,8 @@ export const analyzeResume = async (req: AuthenticatedRequest, res: Response) =>
     const resumeText = await extractPdfText(file.buffer);
 
     const prompt = buildPrompt(resumeText, jobDescription);
-    console.log('prompt are :',prompt);
 
     const aiRawResponse = await generateWithOllama(prompt);
-    console.log('aiRawresponse is ',aiRawResponse);
 
     let aiResponse;
     try {
