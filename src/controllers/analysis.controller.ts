@@ -33,10 +33,8 @@ export const analyzeResume = async (req: AuthenticatedRequest, res: Response) =>
         .trim();
 
       aiResponse = JSON.parse(cleaned);
-    console.log('response is ',aiResponse);
 
     } catch {
-    console.log('Catch block erorr ',aiRawResponse);
 
       return res.status(500).json({
         message: "AI response parsing failed",
